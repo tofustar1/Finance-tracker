@@ -1,22 +1,9 @@
 import React from 'react';
 
-const Spinner = () => {
-  return (
-      <div className="lds-spinner">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-  );
-};
+const Spinner = () => (
+  <div className="spinner-border text-dark" role="status">
+    <span className="visually-hidden">Loading...</span>
+  </div>
+);
 
 export default Spinner;
