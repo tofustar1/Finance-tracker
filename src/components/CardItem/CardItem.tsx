@@ -1,5 +1,5 @@
 import React from 'react';
-import {ICategorie} from "../../types";
+import {ICategory} from "../../types";
 import './CardItem.css';
 import {useAppDispatch, useAppSelector} from "../../app/hook";
 import {getCategories, removeCategory} from "../../store/categoriesThunk";
@@ -7,9 +7,10 @@ import {selectRemoveCategoryLoading} from "../../store/categoriesSlice";
 import ButtonSpinner from "../Spinner/ButtonSpinner";
 
 interface Props {
-  category: ICategorie;
+  category: ICategory;
+  onEditClick: React.MouseEventHandler;
 }
-const CardItem : React.FC<Props> = ({category}) => {
+const CardItem : React.FC<Props> = ({category, onEditClick}) => {
   const dispatch = useAppDispatch();
 
   const removeLoading = useAppSelector(selectRemoveCategoryLoading);
@@ -33,7 +34,7 @@ const CardItem : React.FC<Props> = ({category}) => {
         <h5 className="card-name">{category.name}</h5>
         <div className="card-inner">
           <span className={typeClassName.join(' ')}>{category.type}</span>
-          <button className="btn btn-edit">Edit</button>
+          <button className="btn btn-edit" onClick={onEditClick}>Edit</button>
           <button
               className="btn btn-delete"
               onClick={() => onDeleteClick(category.id)}
