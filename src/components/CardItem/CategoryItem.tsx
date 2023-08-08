@@ -3,19 +3,17 @@ import {ICategory} from "../../types";
 import './CardItem.css';
 import {useAppDispatch, useAppSelector} from "../../app/hook";
 import {getCategories, removeCategory} from "../../store/categoriesThunk";
-import {selectRemoveCategoryLoading} from "../../store/categoriesSlice";
+import {selectRemoveCategoryLoading, setCategory, showCategoryModal} from "../../store/categoriesSlice";
 import ButtonSpinner from "../Spinner/ButtonSpinner";
 
 interface Props {
   category: ICategory;
-  onEditClick: React.MouseEventHandler;
 }
-const CardItem : React.FC<Props> = ({category, onEditClick}) => {
+const CategoryItem : React.FC<Props> = ({category}) => {
   const dispatch = useAppDispatch();
-
   const removeLoading = useAppSelector(selectRemoveCategoryLoading);
 
-  let typeClassName : string[] = ['card-type', ];
+  let typeClassName : string[] = ['card-type'];
   if(category.type === 'income') {
     typeClassName.push('income');
   } else {
@@ -29,12 +27,22 @@ const CardItem : React.FC<Props> = ({category, onEditClick}) => {
     }
   };
 
+  const onEditHandler = () => {
+    dispatch(showCategoryModal(true));
+    dispatch(setCategory(category));
+  };
+
   return (
       <div className="card-item">
         <h5 className="card-name">{category.name}</h5>
         <div className="card-inner">
           <span className={typeClassName.join(' ')}>{category.type}</span>
-          <button className="btn btn-edit" onClick={onEditClick}>Edit</button>
+          <button
+              className="btn btn-edit"
+              onClick={onEditHandler}
+          >
+            Edit
+          </button>
           <button
               className="btn btn-delete"
               onClick={() => onDeleteClick(category.id)}
@@ -48,4 +56,4 @@ const CardItem : React.FC<Props> = ({category, onEditClick}) => {
   );
 };
 
-export default CardItem;
+export default CategoryItem;

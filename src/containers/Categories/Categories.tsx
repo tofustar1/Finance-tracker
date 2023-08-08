@@ -3,41 +3,25 @@ import {useAppDispatch, useAppSelector} from "../../app/hook";
 import {
   clearCategoryItem,
   selectCategories,
-  selectCategoryModal,
   selectGetCategoriesLoading,
   showCategoryModal
 } from "../../store/categoriesSlice";
-import {getCategories, getCategory} from "../../store/categoriesThunk";
+import {getCategories} from "../../store/categoriesThunk";
 import Spinner from "../../components/Spinner/Spinner";
-import CardItem from "../../components/CardItem/CardItem";
+import CategoryItem from "../../components/CardItem/CategoryItem";
 import './Categories.css';
-import Modal from "../../components/Modal/Modal";
-import CategoryForm from "../../components/CategoryForm/CategoryForm";
-
-let title = '';
-let editId = '';
+import CategoryModal from "../../components/Modal/CategoryModal";
 
 const Categories = () => {
-
   const dispatch = useAppDispatch();
   const categories = useAppSelector(selectCategories);
   const getLoading = useAppSelector(selectGetCategoriesLoading);
-  const categoryModal = useAppSelector(selectCategoryModal);
-
 
   useEffect(() => {
     dispatch(getCategories());
   }, [dispatch]);
 
-  const getCategoryInfo = async (id: string) => {
-    title = 'Edit category';
-    await dispatch(getCategory(id));
-    editId = id;
-    dispatch(showCategoryModal(true));
-  };
-
   const onAddBtnClick = async () => {
-    title = 'Add category';
     dispatch(clearCategoryItem());
     dispatch(showCategoryModal(true));
   };
@@ -52,20 +36,12 @@ const Categories = () => {
             <Spinner/>
             :
           categories.map(category => (
-            <CardItem
+            <CategoryItem
                 key={category.id}
                 category={category}
-                onEditClick={() => getCategoryInfo(category.id)}
             />
         ))}
-        <Modal
-            show={categoryModal}
-            title={title}
-            onClose={() => dispatch(showCategoryModal(false))}>
-          <div className="modal-body">
-            <CategoryForm id={editId}/>
-          </div>
-        </Modal>
+        <CategoryModal/>
       </>
   );
 };

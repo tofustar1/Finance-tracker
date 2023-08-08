@@ -1,17 +1,15 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {ICategory, ICategoryMutation} from "../types";
-import {addCategory, editCategory, getCategories, getCategory, removeCategory} from "./categoriesThunk";
+import {ICategory} from "../types";
+import {addCategory, editCategory, getCategories, removeCategory} from "./categoriesThunk";
 import {RootState} from "../app/store";
 
 interface CategoriesState {
   items: ICategory[];
-  item: ICategoryMutation | null;
+  item: ICategory | null;
   isShowCategoryModal: boolean;
   getAllLoading: boolean;
-  getOneLoading: boolean;
   addLoading: boolean;
   removeLoading: boolean | string;
-  editLoading: boolean;
 }
 
 const initialState: CategoriesState = {
@@ -19,10 +17,8 @@ const initialState: CategoriesState = {
   item: null,
   isShowCategoryModal: false,
   getAllLoading: false,
-  getOneLoading: false,
   addLoading: false,
   removeLoading: false,
-  editLoading: false,
 }
 
 const categoriesSlice = createSlice({
@@ -32,9 +28,14 @@ const categoriesSlice = createSlice({
     showCategoryModal: (state, action) => {
       state.isShowCategoryModal = action.payload;
     },
+
     clearCategoryItem: (state) => {
       state.item = null;
-    }
+    },
+
+    setCategory: (state, {payload : category}) => {
+      state.item = category;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -47,18 +48,6 @@ const categoriesSlice = createSlice({
         })
         .addCase(getCategories.rejected, (state) => {
           state.getAllLoading = false;
-        });
-
-    builder
-        .addCase(getCategory.pending, (state) => {
-          state.getOneLoading = true;
-        })
-        .addCase(getCategory.fulfilled, (state, action) => {
-          state.getOneLoading = false;
-          state.item = action.payload;
-        })
-        .addCase(getCategory.rejected, (state) => {
-          state.getOneLoading = false;
         });
 
     builder
@@ -86,14 +75,14 @@ const categoriesSlice = createSlice({
 
     builder
         .addCase(editCategory.pending, (state) =>{
-          state.editLoading = true;
+          state.addLoading = true;
         })
         .addCase(editCategory.fulfilled, (state) =>{
-          state.editLoading = false;
+          state.addLoading = false;
           state.isShowCategoryModal = false;
         })
         .addCase(editCategory.rejected, (state) =>{
-          state.editLoading = false;
+          state.addLoading = false;
         })
   }
 });
@@ -101,14 +90,13 @@ const categoriesSlice = createSlice({
 export const selectCategories = (state: RootState) => state.categories.items;
 
 export const selectCategory = (state: RootState) => state.categories.item;
+
 export const selectGetCategoriesLoading = (state: RootState) => state.categories.getAllLoading;
 
 export const selectRemoveCategoryLoading = (state: RootState) => state.categories.removeLoading;
 export const selectAddCategoryLoading = (state: RootState) => state.categories.addLoading;
 
-export const selectEditCategoryLoading = (state: RootState) => state.categories.editLoading;
-
 export const selectCategoryModal = (state: RootState) => state.categories.isShowCategoryModal;
 export const categoriesReducer = categoriesSlice.reducer;
 
-export const {showCategoryModal, clearCategoryItem} = categoriesSlice.actions;
+export const {showCategoryModal, clearCategoryItem, setCategory} = categoriesSlice.actions;

@@ -1,56 +1,45 @@
 import React, {useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from "../../app/hook";
-import {selectAddCategoryLoading, selectCategory, showCategoryModal} from "../../store/categoriesSlice";
-import {addCategory, editCategory, getCategories} from "../../store/categoriesThunk";
-import {ICategoryMutation} from "../../types";
+import {selectAddCategoryLoading, showCategoryModal} from "../../store/categoriesSlice";
+import {ICategory, ICategoryMutation} from "../../types";
 import ButtonSpinner from "../Spinner/ButtonSpinner";
 
-interface Props {
-  id? : string;
-}
-
-const initialState: ICategoryMutation = {
+const initialState : ICategoryMutation = {
   name: '',
-  type: '',
+  type: ''
+};
+
+interface Props {
+  category: ICategory | null;
+  onSubmit: (newCategory : ICategoryMutation) => void;
 }
-const CategoryForm : React.FC<Props> = ({id}) => {
+const CategoryForm : React.FC<Props> = ({category, onSubmit}) => {
+  const [formState, setFormState] =
+      useState<ICategoryMutation>(category || initialState);
   const dispatch = useAppDispatch();
-  const oneCategory = useAppSelector(selectCategory);
   const addLoading = useAppSelector(selectAddCategoryLoading);
-  const [category, setCategory] = useState<ICategoryMutation>(oneCategory ? oneCategory : {
-    name: '',
-    type: '',
-  });
 
   useEffect(() => {
-    if (oneCategory) {
-      setCategory(oneCategory);
+    if (category) {
+      setFormState(category);
     } else {
-      setCategory(initialState);
+      setFormState(initialState);
     }
-  }, [oneCategory]);
+  }, [category]);
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const {name, value} = e.target;
 
-    setCategory(prevState => ({
+    setFormState(prevState => ({
       ...prevState,
       [name]: value
     }));
   };
 
-  const onSubmitHandler = async (e: React.FormEvent) => {
+  const onSubmitHandler = (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (oneCategory && id) {
-      await dispatch(editCategory({ id, category}));
-    } else {
-      await dispatch(addCategory(category));
-    }
-
-    await dispatch(getCategories());
+    onSubmit(formState);
   };
-
 
   return (
       <form onSubmit={onSubmitHandler}>
@@ -58,7 +47,7 @@ const CategoryForm : React.FC<Props> = ({id}) => {
           <label htmlFor="type" className="form-label">Type</label>
           <select
               name="type"
-              value={category.type}
+              value={formState.type}
               className="form-select"
               id="type"
               onChange={onChangeHandler}
@@ -74,7 +63,7 @@ const CategoryForm : React.FC<Props> = ({id}) => {
           <input
               type="name"
               name="name"
-              value={category.name}
+              value={formState.name}
               className="form-control"
               id="name"
               onChange={onChangeHandler}
@@ -95,10 +84,9 @@ const CategoryForm : React.FC<Props> = ({id}) => {
               disabled={addLoading}
           >
             {addLoading && <ButtonSpinner/>}
-            {oneCategory ? 'Edit' : 'Add'}
+            {category ? 'Edit' : 'Add'}
           </button>
         </div>
-
       </form>
   );
 };

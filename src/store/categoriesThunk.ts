@@ -20,14 +20,6 @@ export const getCategories = createAsyncThunk<ICategory[]>(
     }
 );
 
-export const getCategory = createAsyncThunk<ICategoryMutation, string>(
-    'categories/get',
-    async (id) => {
-      const response = await axiosApi<ICategoryMutation>(`categories/${id}.json`);
-      return response.data;
-    }
-);
-
 export const addCategory = createAsyncThunk<void, ICategoryMutation>(
     'categories/add',
     async (category) => {
