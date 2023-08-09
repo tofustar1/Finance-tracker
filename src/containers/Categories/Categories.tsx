@@ -35,12 +35,17 @@ const Categories = () => {
         {getLoading ?
             <Spinner/>
             :
-          categories.map(category => (
-            <CategoryItem
-                key={category.id}
-                category={category}
-            />
-        ))}
+            categories.length > 0 ?
+                categories.map(category => (
+                    <CategoryItem
+                        key={category.id}
+                        category={category}
+                    />
+                )) :
+                <div className="alert alert-dark w-25" role="alert">
+                  No categories yet!
+                </div>
+        }
         <CategoryModal/>
       </>
   );

@@ -13,7 +13,6 @@ const CategoryModal = () => {
   const category = useAppSelector(selectCategory);
 
   const onSubmit = async (newCategory: ICategoryMutation) => {
-
     if (category) {
       await dispatch(editCategory({
         id: category.id,

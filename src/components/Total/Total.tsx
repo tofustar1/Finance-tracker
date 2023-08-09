@@ -1,18 +1,19 @@
 import React from 'react';
-import {useAppSelector} from "../../app/hook";
-import {selectTotalAmount} from "../../store/transactionsSlice";
 import './Total.css';
 
-const Total = () => {
-  const totalAmount = useAppSelector(selectTotalAmount);
+interface Props {
+  total: number;
+}
+const Total : React.FC<Props> = ({total}) => {
+
   return (
       <div className="total">
         <b>Total: </b>
         <span
             className="total-num"
-            style={{color: totalAmount > 0 ? 'green' : 'red'}}
+            style={{color: total > 0 ? 'green' : 'red'}}
         >
-          {totalAmount}
+          {total}
         </span>
       </div>
   );

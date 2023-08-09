@@ -39,6 +39,7 @@ const CategoryForm : React.FC<Props> = ({category, onSubmit}) => {
   const onSubmitHandler = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit(formState);
+    setFormState(initialState);
   };
 
   return (

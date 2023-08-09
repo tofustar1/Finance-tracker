@@ -10,36 +10,43 @@ import {
 import Spinner from "../../components/Spinner/Spinner";
 import TransactionItem from "../../components/CardItem/TransactionItem";
 import Total from "../../components/Total/Total";
+import TransactionModal from "../../components/Modal/TransactionModal";
 
 const Transactions = () => {
   const dispatch = useAppDispatch();
   const transactions = useAppSelector(selectTransactions);
+  const totalAmount = useAppSelector(selectTotalAmount);
   const loading = useAppSelector(selectGetTransactionsLoading);
 
   useEffect(() => {
-    const getData = async () => {
-      await dispatch(getTransactions());
-      dispatch(sumTotalAmount());
-    };
-
-    void getData();
+    dispatch(getTransactions());
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(sumTotalAmount());
+  }, [dispatch, transactions]);
 
   return (
       <>
+        <h2>Transactions</h2>
         {
           loading ?
               <Spinner/>
               :
               <>
-                <Total/>
+                <Total total={totalAmount}/>
                 {
-                  transactions.map(transaction => (
-                      <TransactionItem key={transaction.id} transaction={transaction}/>
-                  ))
+                  transactions.length > 0 ?
+                      transactions.map(transaction => (
+                          <TransactionItem key={transaction.id} transaction={transaction}/>
+                      )) :
+                      <div className="alert alert-dark w-25" role="alert">
+                        No transactions yet!
+                      </div>
                 }
               </>
         }
+        <TransactionModal/>
       </>
   );
 };

@@ -1,6 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axiosApi from "../axiosApi";
-import {ITransaction, ITransactionFullInfo, ITransactionsList} from "../types";
+import {IEditTransaction, ITransaction, ITransactionFullInfo, ITransactionMutation, ITransactionsList} from "../types";
 import {AppDispatch, RootState} from "../app/store";
 import {getCategories} from "./categoriesThunk";
 
@@ -39,5 +39,26 @@ export const getTransactions = createAsyncThunk<ITransactionFullInfo[], undefine
       transactionsFullInfo.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
       return transactionsFullInfo;
+    }
+);
+
+export const addTransaction = createAsyncThunk<void, ITransactionMutation>(
+    'transactions/add',
+    async (transaction) => {
+      await axiosApi.post(`transactions.json`, transaction);
+    }
+);
+
+export const editTransaction = createAsyncThunk<void, IEditTransaction>(
+    'transactions/edit',
+    async (params) => {
+      await axiosApi.put(`transactions/${params.id}.json`, params.transaction);
+    }
+);
+
+export const removeTransaction = createAsyncThunk<void, string>(
+    'transactions/remove',
+    async (id) => {
+      await axiosApi.delete(`transactions/${id}.json`);
     }
 );

@@ -10,20 +10,38 @@
     padding: 0;
     list-style: none;
     display: flex;
+    align-items: center;
+}
+
+.logo {
+    font-weight: bold;
+    font-size: 24px;
+    color: #fff;
 }
 
 .nav-link {
     padding: 0;
     text-decoration: none;
     color: #fff;
-    font-size: 19px;
+    font-size: 18px;
 }
 
-.nav-link-add {
+.nav-link-addition {
     margin-left: 20px;
 }
 
 .main-nav-link {
     font-size: 24px;
     font-weight: bold;
+}
+
+.btn-transaction {
+    border: 1px solid #fff;
+    padding: 5px 13px;
+    border-radius: 4px;
+}
+
+.btn-transaction:hover {
+    background: #2e2e2e;
+    color: #fff;
 }
