@@ -13,10 +13,14 @@
 }
 
 .nav-link {
-    margin: 0 10px;
+    padding: 0;
     text-decoration: none;
     color: #fff;
     font-size: 19px;
+}
+
+.nav-link-add {
+    margin-left: 20px;
 }
 
 .main-nav-link {

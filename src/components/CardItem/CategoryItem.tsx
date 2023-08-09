@@ -35,7 +35,7 @@ const CategoryItem : React.FC<Props> = ({category}) => {
   return (
       <div className="card-item">
         <h5 className="card-name">{category.name}</h5>
-        <div className="card-inner">
+        <div>
           <span className={typeClassName.join(' ')}>{category.type}</span>
           <button
               className="btn btn-edit"

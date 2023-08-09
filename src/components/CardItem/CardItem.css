@@ -9,6 +9,14 @@
     align-items: baseline;
 }
 
+.card-inner {
+    display: flex;
+}
+
+.card-time {
+    margin-right: 35px;
+}
+
 .card-name {
     font-size: 18px;
 }

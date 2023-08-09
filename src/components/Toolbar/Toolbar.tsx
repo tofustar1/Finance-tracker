@@ -11,7 +11,7 @@ const Toolbar = () => {
             <NavLink className="nav-link" to='/categories'>Categories</NavLink>
           </li>
           <li>
-            <a href="#" className="nav-link">Add</a>
+            <a href="#" className="nav-link nav-link-add">Add</a>
           </li>
         </ul>
       </nav>
