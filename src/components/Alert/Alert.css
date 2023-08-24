@@ -1,0 +1,26 @@
+.alert-location {
+    position: absolute;
+    top: 74px;
+    right: 15px;
+    width: 330px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.alert-location.show {
+    opacity: 1;
+}
+
+.alert-btn {
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.alert-msg {
+    margin-right: 25px;
+}
+
+.alert-ic {
+    cursor: pointer;
+    font-size: 20px;
+}

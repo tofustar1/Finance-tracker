@@ -11,6 +11,7 @@ import Spinner from "../../components/Spinner/Spinner";
 import TransactionItem from "../../components/CardItem/TransactionItem";
 import Total from "../../components/Total/Total";
 import TransactionModal from "../../components/Modal/TransactionModal";
+import Alert from "../../components/Alert/Alert";
 
 const Transactions = () => {
   const dispatch = useAppDispatch();
@@ -47,6 +48,7 @@ const Transactions = () => {
               </>
         }
         <TransactionModal/>
+        <Alert/>
       </>
   );
 };

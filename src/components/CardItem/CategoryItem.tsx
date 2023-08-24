@@ -5,6 +5,7 @@ import {useAppDispatch, useAppSelector} from "../../app/hook";
 import {getCategories, removeCategory} from "../../store/categoriesThunk";
 import {selectRemoveCategoryLoading, setCategory, showCategoryModal} from "../../store/categoriesSlice";
 import ButtonSpinner from "../Spinner/ButtonSpinner";
+import {setAlert} from "../../store/alertSlice";
 
 interface Props {
   category: ICategory;
@@ -24,6 +25,10 @@ const CategoryItem : React.FC<Props> = ({category}) => {
     if (window.confirm('Do you really want to delete this category?')) {
       await dispatch(removeCategory(id));
       await dispatch(getCategories());
+      dispatch(setAlert({
+        message: 'Category successfully removed',
+        type: 'danger'
+      }));
     }
   };
 

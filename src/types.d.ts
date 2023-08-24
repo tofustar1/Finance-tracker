@@ -53,3 +53,8 @@ export interface IEditTransaction {
   id: string;
   transaction: ITransactionMutation;
 }
+
+export interface IAlert {
+  message: string;
+  type: string;
+}

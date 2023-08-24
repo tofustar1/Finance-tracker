@@ -36,6 +36,7 @@ const categoriesSlice = createSlice({
     setCategory: (state, {payload : category}) => {
       state.item = category;
     },
+
   },
   extraReducers: (builder) => {
     builder
@@ -97,6 +98,7 @@ export const selectRemoveCategoryLoading = (state: RootState) => state.categorie
 export const selectAddCategoryLoading = (state: RootState) => state.categories.addLoading;
 
 export const selectCategoryModal = (state: RootState) => state.categories.isShowCategoryModal;
+
 export const categoriesReducer = categoriesSlice.reducer;
 
 export const {showCategoryModal, clearCategoryItem, setCategory} = categoriesSlice.actions;

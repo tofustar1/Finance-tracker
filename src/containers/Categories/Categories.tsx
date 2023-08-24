@@ -11,6 +11,7 @@ import Spinner from "../../components/Spinner/Spinner";
 import CategoryItem from "../../components/CardItem/CategoryItem";
 import './Categories.css';
 import CategoryModal from "../../components/Modal/CategoryModal";
+import Alert from "../../components/Alert/Alert";
 
 const Categories = () => {
   const dispatch = useAppDispatch();
@@ -47,6 +48,7 @@ const Categories = () => {
                 </div>
         }
         <CategoryModal/>
+        <Alert/>
       </>
   );
 };

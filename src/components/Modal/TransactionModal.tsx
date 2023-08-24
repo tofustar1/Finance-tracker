@@ -5,6 +5,7 @@ import {selectTransaction, selectTransactionModal, showTransactionModal} from ".
 import TransactionForm from "../TransactionForm/TransactionForm";
 import {ITransactionMutation} from "../../types";
 import {addTransaction, editTransaction, getTransactions} from "../../store/transactionsThunk";
+import {setAlert} from "../../store/alertSlice";
 
 const TransactionModal = () => {
   const dispatch = useAppDispatch();
@@ -17,8 +18,16 @@ const TransactionModal = () => {
         id: transaction.id,
         transaction: newTransaction
       }));
+      dispatch(setAlert({
+        message: 'Category successfully edited',
+        type: 'success'
+      }));
     } else {
       await dispatch(addTransaction(newTransaction));
+      dispatch(setAlert({
+        message: 'Category successfully added',
+        type: 'success'
+      }));
     }
     await dispatch(getTransactions());
   };

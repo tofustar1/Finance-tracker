@@ -5,6 +5,7 @@ import {selectCategory, selectCategoryModal, showCategoryModal} from "../../stor
 import CategoryForm from "../CategoryForm/CategoryForm";
 import {addCategory, editCategory, getCategories} from "../../store/categoriesThunk";
 import {ICategoryMutation} from "../../types";
+import {setAlert} from "../../store/alertSlice";
 
 
 const CategoryModal = () => {
@@ -18,8 +19,16 @@ const CategoryModal = () => {
         id: category.id,
         category: newCategory
       }));
+      dispatch(setAlert({
+        message: 'Category successfully edited',
+        type: 'success'
+      }));
     } else {
       await dispatch(addCategory(newCategory));
+      dispatch(setAlert({
+        message: 'Category successfully added',
+        type: 'success'
+      }));
     }
     await dispatch(getCategories());
   };

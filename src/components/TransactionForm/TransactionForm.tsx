@@ -45,6 +45,13 @@ const TransactionForm: React.FC<Props> = ({onSubmit, transaction}) => {
       ...prevState,
       [name]: value
     }));
+
+    if (name === 'type') {
+      setFormState(prevState => ({
+        ...prevState,
+        category: "",
+      }));
+    }
   };
 
   const onSubmitHandler = (e: React.FormEvent) => {
@@ -104,19 +111,20 @@ const TransactionForm: React.FC<Props> = ({onSubmit, transaction}) => {
         <div className="mb-3">
           <label htmlFor="amount" className="form-label">Amount</label>
           <input
-              type="price"
+              type="number"
               name="amount"
               value={formState.amount}
               className="form-control"
               id="amount"
               onChange={onChangeHandler}
+              min={1}
               required
           />
         </div>
         <div className="mb-3">
           <button
               type="button"
-              className="btn btn-danger me-5"
+              className="btn btn-danger me-4"
               onClick={() => dispatch(showTransactionModal(false))}
           >
             Cancel

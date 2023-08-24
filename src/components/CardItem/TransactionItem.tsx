@@ -5,6 +5,7 @@ import {useAppDispatch, useAppSelector} from "../../app/hook";
 import {getTransactions, removeTransaction} from "../../store/transactionsThunk";
 import ButtonSpinner from "../Spinner/ButtonSpinner";
 import {selectRemoveTransactionLoading, setTransaction, showTransactionModal} from "../../store/transactionsSlice";
+import {setAlert} from "../../store/alertSlice";
 
 interface Props {
   transaction: ITransactionFullInfo;
@@ -23,6 +24,10 @@ const TransactionItem : React.FC<Props> = ({transaction}) => {
   const onDeleteClick = async (id: string) => {
     await dispatch(removeTransaction(id));
     await dispatch(getTransactions());
+    dispatch(setAlert({
+      message: 'Transaction successfully removed',
+      type: 'danger'
+    }));
   };
 
   const onEditHandler = () => {

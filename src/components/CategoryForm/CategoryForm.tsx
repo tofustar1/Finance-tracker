@@ -74,7 +74,7 @@ const CategoryForm : React.FC<Props> = ({category, onSubmit}) => {
         <div className="mb-3">
           <button
               type="button"
-              className="btn btn-danger me-5"
+              className="btn btn-danger me-4"
               onClick={() => dispatch(showCategoryModal(false))}
           >
             Cancel

@@ -1,6 +1,8 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axiosApi from "../axiosApi";
 import {ICategoriesList, ICategory, ICategoryMutation, IEditCategory} from "../types";
+import {useAppDispatch} from "../app/hook";
+import {setAlert} from "./alertSlice";
 
 export const getCategories = createAsyncThunk<ICategory[]>(
     'categories/getAll',
@@ -38,6 +40,5 @@ export const editCategory = createAsyncThunk<void, IEditCategory>(
 export const removeCategory = createAsyncThunk<void, string>(
     'categories/remove',
     async (id) => {
-      await axiosApi.delete(`categories/${id}.json`);
-    }
+      await axiosApi.delete(`categories/${id}.json`);}
 );
