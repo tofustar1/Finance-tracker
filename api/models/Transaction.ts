@@ -8,7 +8,7 @@ const TransactionSchema = new Schema<ITransaction>({
     type: String,
     required: true
   },
-  createdAd: {
+  createdAt: {
     type: Date,
     required: true,
     default: Date.now,
@@ -19,7 +19,7 @@ const TransactionSchema = new Schema<ITransaction>({
     required: true,
     validate: {
       validator: async (value: Types.ObjectId) => await Category.findById(value),
-      message: 'Category does nit exist!',
+      message: 'Category does not exist!',
     }
   }
 });
