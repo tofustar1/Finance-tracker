@@ -7,7 +7,7 @@ const transactions = express.Router();
 
 transactions.get('/', async (req, res) => {
   try {
-    const transactions = await Transaction.find();
+    const transactions = await Transaction.find().populate('category');
     res.send(transactions);
   } catch (e) {
     res.status(500).send(e);
@@ -15,15 +15,16 @@ transactions.get('/', async (req, res) => {
 });
 
 transactions.post('/', async (req, res, next) => {
-  const { name, category } = req.body;
+  const { category, amount, name } = req.body;
 
-  if (!name) {
-    return res.status(400).send({error: 'Name is required field'});
+  if (!amount || !category) {
+    return res.status(400).send({error: 'Category and amount is required fields'});
   }
 
   const transactionData : Omit<ITransaction, 'createdAt'>  = {
     name,
-    category
+    category,
+    amount
   };
 
   const transaction = new Transaction(transactionData);

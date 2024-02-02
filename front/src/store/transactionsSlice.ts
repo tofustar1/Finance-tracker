@@ -1,11 +1,11 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {ITransactionFullInfo} from "../types";
+import {ITransaction} from "../types";
 import {addTransaction, editTransaction, getTransactions, removeTransaction} from "./transactionsThunk";
 import {RootState} from "../app/store";
 
 interface TransactionsState {
-  items: ITransactionFullInfo[];
-  item: ITransactionFullInfo | null;
+  items: ITransaction[];
+  item: ITransaction | null;
   getAllLoading: boolean;
   totalAmount: number;
   addLoading: boolean;
@@ -29,7 +29,7 @@ const transactionsSlice = createSlice({
   reducers: {
     sumTotalAmount: (state) => {
       state.totalAmount = state.items.reduce((acc, val) => {
-        return val.type === 'income' ? acc + val.amount : acc - val.amount;
+        return val.category.type === 'income' ? acc + val.amount : acc - val.amount;
       }, 0);
     },
 

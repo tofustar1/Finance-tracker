@@ -9,4 +9,5 @@ export interface ITransaction {
   name: string;
   createdAt: Date;
   category: mongoose.Types.ObjectId;
+  amount: numer;
 }

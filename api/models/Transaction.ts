@@ -4,10 +4,7 @@ import Category from "./Category";
 const Schema = mongoose.Schema;
 
 const TransactionSchema = new Schema<ITransaction>({
-  name: {
-    type: String,
-    required: true
-  },
+  name: String,
   createdAt: {
     type: Date,
     required: true,
@@ -21,6 +18,10 @@ const TransactionSchema = new Schema<ITransaction>({
       validator: async (value: Types.ObjectId) => await Category.findById(value),
       message: 'Category does not exist!',
     }
+  },
+  amount: {
+    type: Number,
+    required: true
   }
 });
 

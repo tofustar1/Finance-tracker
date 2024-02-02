@@ -15,15 +15,16 @@ export interface IEditCategory {
 }
 
 export interface ITransaction {
-  id: string;
-  category: string;
+  _id: string;
+  name: string;
+  category: ICategory;
   amount: number;
   createdAt: string;
 }
 
 export interface ITransactionForm {
   type: string;
-  category: string;
+  category: ICategory;
   amount: number;
 }
 
@@ -31,18 +32,6 @@ export interface ITransactionMutation {
   category: string;
   amount: number;
   createdAt: string;
-}
-
-export interface ITransactionsList {
-  [id: string] : ITransaction;
-}
-
-export interface ITransactionFullInfo {
-  id: string;
-  category: string;
-  amount: number;
-  createdAt: string;
-  type: string;
 }
 
 export interface IEditTransaction {

@@ -15,7 +15,7 @@ const TransactionModal = () => {
   const onSubmit = async (newTransaction: ITransactionMutation) => {
     if (transaction) {
       await dispatch(editTransaction({
-        id: transaction.id,
+        id: transaction._id,
         transaction: newTransaction
       }));
       dispatch(setAlert({

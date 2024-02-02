@@ -39,7 +39,7 @@ const Transactions = () => {
                 {
                   transactions.length > 0 ?
                       transactions.map(transaction => (
-                          <TransactionItem key={transaction.id} transaction={transaction}/>
+                          <TransactionItem key={transaction._id} transaction={transaction}/>
                       )) :
                       <div className="alert alert-dark w-25" role="alert">
                         No transactions yet!

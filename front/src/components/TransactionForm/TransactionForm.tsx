@@ -1,18 +1,22 @@
 import React, {useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from "../../app/hook";
 import {selectCategories} from "../../store/categoriesSlice";
-import {ICategory, ITransactionForm, ITransactionFullInfo, ITransactionMutation} from "../../types";
+import {ICategory, ITransaction, ITransactionForm, ITransactionMutation} from "../../types";
 import {selectAddTransactionLoading, showTransactionModal} from "../../store/transactionsSlice";
 import ButtonSpinner from "../Spinner/ButtonSpinner";
 
 const initialState: ITransactionForm = {
   type: '',
-  category: '',
+  category: {
+    _id: '',
+    name: '',
+    type: '',
+  },
   amount: 0,
 };
 
 interface Props {
-  transaction: ITransactionFullInfo | null;
+  transaction: ITransaction | null;
   onSubmit: (newTransaction: ITransactionMutation) => void;
 }
 
@@ -29,7 +33,7 @@ const TransactionForm: React.FC<Props> = ({onSubmit, transaction}) => {
   useEffect(() => {
     if (transaction) {
       setFormState({
-        type: transaction.type,
+        type: transaction.category.type,
         category: transaction.category,
         amount: transaction.amount
       });
@@ -49,7 +53,11 @@ const TransactionForm: React.FC<Props> = ({onSubmit, transaction}) => {
     if (name === 'type') {
       setFormState(prevState => ({
         ...prevState,
-        category: "",
+        category: {
+          _id: '',
+          name: '',
+          type: '',
+        },
       }));
     }
   };
@@ -57,7 +65,7 @@ const TransactionForm: React.FC<Props> = ({onSubmit, transaction}) => {
   const onSubmitHandler = (e: React.FormEvent) => {
     e.preventDefault();
     const date = new Date().toISOString();
-    const desiredCategory = categories.find(category => category.name === formState.category);
+    const desiredCategory = categories.find(category => category.name === formState.category.name);
     if (desiredCategory) {
       transaction ?
           onSubmit({
@@ -96,7 +104,7 @@ const TransactionForm: React.FC<Props> = ({onSubmit, transaction}) => {
           <label htmlFor="category" className="form-label">Type</label>
           <select
               name="category"
-              value={formState.category}
+              value={formState.category.name}
               className="form-select"
               id="category"
               onChange={onChangeHandler}

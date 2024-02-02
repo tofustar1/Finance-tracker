@@ -1,5 +1,5 @@
 import React from 'react';
-import {ITransactionFullInfo} from "../../types";
+import {ITransaction} from "../../types";
 import dayjs from "dayjs";
 import {useAppDispatch, useAppSelector} from "../../app/hook";
 import {getTransactions, removeTransaction} from "../../store/transactionsThunk";
@@ -8,14 +8,14 @@ import {selectRemoveTransactionLoading, setTransaction, showTransactionModal} fr
 import {setAlert} from "../../store/alertSlice";
 
 interface Props {
-  transaction: ITransactionFullInfo;
+  transaction: ITransaction;
 }
 const TransactionItem : React.FC<Props> = ({transaction}) => {
   const dispatch = useAppDispatch();
   const removeLoading = useAppSelector(selectRemoveTransactionLoading);
 
   let typeClassName : string[] = ['card-type'];
-  if(transaction.type === 'income') {
+  if(transaction.category.type === 'income') {
     typeClassName.push('income');
   } else {
     typeClassName.push('expense');
@@ -39,13 +39,13 @@ const TransactionItem : React.FC<Props> = ({transaction}) => {
       <div className="card-item">
         <div className="card-inner">
           <span className="card-time">{dayjs(transaction.createdAt).format('DD.MM.YYYY HH:mm:ss')}</span>
-          <h5 className="card-name">{transaction.category}</h5>
+          <h5 className="card-name">{transaction.category.name}</h5>
         </div>
         <div>
           <span
               className={typeClassName.join(' ')}
           >
-            {transaction.type === 'income' ? '+' : '-'}
+            {transaction.category.type === 'income' ? '+' : '-'}
             {transaction.amount}
           </span>
           <button
@@ -56,10 +56,10 @@ const TransactionItem : React.FC<Props> = ({transaction}) => {
           </button>
           <button
               className="btn btn-delete"
-              onClick={() => onDeleteClick(transaction.id)}
-              disabled={removeLoading ? removeLoading === transaction.id : false}
+              onClick={() => onDeleteClick(transaction._id)}
+              disabled={removeLoading ? removeLoading === transaction._id : false}
           >
-            {removeLoading && removeLoading === transaction.id && <ButtonSpinner/>}
+            {removeLoading && removeLoading === transaction._id && <ButtonSpinner/>}
             Delete
           </button>
         </div>
