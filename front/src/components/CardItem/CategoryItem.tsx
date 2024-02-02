@@ -50,10 +50,10 @@ const CategoryItem : React.FC<Props> = ({category}) => {
           </button>
           <button
               className="btn btn-delete"
-              onClick={() => onDeleteClick(category.id)}
-              disabled={removeLoading ? removeLoading === category.id : false}
+              onClick={() => onDeleteClick(category._id)}
+              disabled={removeLoading ? removeLoading === category._id : false}
           >
-            {removeLoading && removeLoading === category.id && <ButtonSpinner/>}
+            {removeLoading && removeLoading === category._id && <ButtonSpinner/>}
             Delete
           </button>
         </div>

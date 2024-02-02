@@ -39,7 +39,7 @@ const Categories = () => {
             categories.length > 0 ?
                 categories.map(category => (
                     <CategoryItem
-                        key={category.id}
+                        key={category._id}
                         category={category}
                     />
                 )) :

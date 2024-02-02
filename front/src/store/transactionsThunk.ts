@@ -23,7 +23,7 @@ export const getTransactions = createAsyncThunk<ITransactionFullInfo[], undefine
         let transactionsFullInfo: ITransactionFullInfo[] = [];
 
         newTransactions.forEach(transaction => {
-          const category = categories.find((category) => transaction.category === category.id);
+          const category = categories.find((category) => transaction.category === category._id);
 
           if(category) {
             transactionsFullInfo.push({

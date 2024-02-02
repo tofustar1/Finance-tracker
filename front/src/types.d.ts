@@ -1,11 +1,7 @@
 export interface ICategory {
-  id: string;
+  _id: string;
   type: string;
   name: string;
-}
-
-export interface ICategoriesList {
-  [id: string] : ICategorie;
 }
 
 export interface ICategoryMutation {
@@ -14,8 +10,8 @@ export interface ICategoryMutation {
 }
 
 export interface IEditCategory {
-  id: string;
-  category: ICategorieMutation;
+  _id: string;
+  category: ICategoryMutation;
 }
 
 export interface ITransaction {

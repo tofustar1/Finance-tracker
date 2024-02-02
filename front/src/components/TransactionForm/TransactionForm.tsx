@@ -63,13 +63,13 @@ const TransactionForm: React.FC<Props> = ({onSubmit, transaction}) => {
           onSubmit({
             createdAt: transaction.createdAt,
             amount: Number(formState.amount),
-            category: desiredCategory.id
+            category: desiredCategory._id
           })
           :
           onSubmit({
             createdAt: date,
             amount: Number(formState.amount),
-            category: desiredCategory.id
+            category: desiredCategory._id
           });
     }
     setFormState(initialState);
@@ -104,7 +104,7 @@ const TransactionForm: React.FC<Props> = ({onSubmit, transaction}) => {
           >
             <option disabled value="">Select category</option>
             {filteredCategories(categories).map(category => (
-                <option key={category.id} value={category.name}>{category.name}</option>
+                <option key={category._id} value={category.name}>{category.name}</option>
             ))}
           </select>
         </div>

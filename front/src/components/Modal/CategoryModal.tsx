@@ -16,7 +16,7 @@ const CategoryModal = () => {
   const onSubmit = async (newCategory: ICategoryMutation) => {
     if (category) {
       await dispatch(editCategory({
-        id: category.id,
+        _id: category._id,
         category: newCategory
       }));
       dispatch(setAlert({
