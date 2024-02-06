@@ -28,5 +28,5 @@ export const editCategory = createAsyncThunk<void, IEditCategory>(
 export const removeCategory = createAsyncThunk<void, string>(
     'categories/remove',
     async (id) => {
-      await axiosApi.delete(`categories/${id}.json`);}
+      await axiosApi.delete(`categories/${id}`);}
 );

@@ -1,7 +1,8 @@
 import express from "express";
-import Category from "../models/Category";
-import {ICategory} from "../types";
 import mongoose from "mongoose";
+import {ICategory} from "../types";
+import Category from "../models/Category";
+import Transaction from "../models/Transaction";
 
 const categories = express.Router();
 
@@ -36,6 +37,20 @@ categories.post('/', async (req, res, next) => {
       return res.status(400).send(e);
     }
     next(e);
+  }
+});
+
+categories.delete('/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    await Transaction.deleteMany({category: id});
+    await Category.findByIdAndDelete(id);
+
+    res.send('Category and related transactions deleted successfully');
+  } catch (e) {
+    console.error('Error deleting Category:', e);
+    res.status(500).send('An error occurred while deleting the category');
   }
 });
 

@@ -10,24 +10,27 @@ import {setAlert} from "../../store/alertSlice";
 interface Props {
   transaction: ITransaction;
 }
-const TransactionItem : React.FC<Props> = ({transaction}) => {
+
+const TransactionItem: React.FC<Props> = ({transaction}) => {
   const dispatch = useAppDispatch();
   const removeLoading = useAppSelector(selectRemoveTransactionLoading);
 
-  let typeClassName : string[] = ['card-type'];
-  if(transaction.category.type === 'income') {
+  let typeClassName: string[] = ['card-type'];
+  if (transaction.category.type === 'income') {
     typeClassName.push('income');
   } else {
     typeClassName.push('expense');
   }
 
   const onDeleteClick = async (id: string) => {
-    await dispatch(removeTransaction(id));
-    await dispatch(getTransactions());
-    dispatch(setAlert({
-      message: 'Transaction successfully removed',
-      type: 'danger'
-    }));
+    if (window.confirm('Do you really want to delete this transaction?')) {
+      await dispatch(removeTransaction(id));
+      await dispatch(getTransactions());
+      dispatch(setAlert({
+        message: 'Transaction successfully removed',
+        type: 'danger'
+      }));
+    }
   };
 
   const onEditHandler = () => {
