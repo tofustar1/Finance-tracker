@@ -19,13 +19,13 @@ const TransactionModal = () => {
         transaction: newTransaction
       }));
       dispatch(setAlert({
-        message: 'Category successfully edited',
+        message: 'Transaction successfully edited',
         type: 'success'
       }));
     } else {
       await dispatch(addTransaction(newTransaction));
       dispatch(setAlert({
-        message: 'Category successfully added',
+        message: 'Transaction successfully added',
         type: 'success'
       }));
     }

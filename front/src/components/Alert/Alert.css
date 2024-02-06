@@ -3,12 +3,6 @@
     top: 74px;
     right: 15px;
     width: 330px;
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-.alert-location.show {
-    opacity: 1;
 }
 
 .alert-btn {

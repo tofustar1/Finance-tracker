@@ -27,6 +27,6 @@ export const editTransaction = createAsyncThunk<void, IEditTransaction>(
 export const removeTransaction = createAsyncThunk<void, string>(
     'transactions/remove',
     async (id) => {
-      await axiosApi.delete(`transactions/${id}.json`);
+      await axiosApi.delete(`transactions/${id}`);
     }
 );

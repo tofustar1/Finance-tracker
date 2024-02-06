@@ -34,10 +34,19 @@ transactions.post('/', async (req, res, next) => {
     res.send(transaction);
   } catch (e) {
     if (e instanceof mongoose.Error.ValidationError) {
-      console.log('here');
       return res.status(400).send(e);
     }
     next(e);
+  }
+});
+
+transactions.delete('/:id', async (req, res, next) => {
+  try {
+    await Transaction.findByIdAndDelete(req.params.id);
+    res.send('Transaction deleted successfully')
+  } catch (e) {
+    console.error('Error deleting transaction:', e);
+    res.status(500).send('An error occurred while deleting the transaction');
   }
 });
 
