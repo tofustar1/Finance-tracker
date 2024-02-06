@@ -6,12 +6,9 @@ import {selectAddTransactionLoading, showTransactionModal} from "../../store/tra
 import ButtonSpinner from "../Spinner/ButtonSpinner";
 
 const initialState: ITransactionForm = {
+  _id: '',
+  name: '',
   type: '',
-  category: {
-    _id: '',
-    name: '',
-    type: '',
-  },
   amount: 0,
 };
 
@@ -26,21 +23,23 @@ const TransactionForm: React.FC<Props> = ({onSubmit, transaction}) => {
   const categories = useAppSelector(selectCategories);
   const addLoading = useAppSelector(selectAddTransactionLoading);
 
-  const filteredCategories = (categories: ICategory[]) => {
+  useEffect(() => {
+    const category = filteredCategoriesByName(categories);
+    if (category) {
+      setFormState(prevState => ({
+        ...prevState,
+        _id: category._id
+      }));
+    }
+  }, [formState.name]);
+
+  const filteredCategoriesByType = (categories: ICategory[]) => {
     return categories.filter(category => category.type === formState.type);
   };
 
-  useEffect(() => {
-    if (transaction) {
-      setFormState({
-        type: transaction.category.type,
-        category: transaction.category,
-        amount: transaction.amount
-      });
-    } else {
-      setFormState(initialState);
-    }
-  }, [transaction]);
+  const filteredCategoriesByName = (categories: ICategory[]) => {
+    return categories.find(category => category.name === formState.name);
+  };
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const {name, value} = e.target;
@@ -50,36 +49,14 @@ const TransactionForm: React.FC<Props> = ({onSubmit, transaction}) => {
       [name]: value
     }));
 
-    if (name === 'type') {
-      setFormState(prevState => ({
-        ...prevState,
-        category: {
-          _id: '',
-          name: '',
-          type: '',
-        },
-      }));
-    }
   };
 
   const onSubmitHandler = (e: React.FormEvent) => {
     e.preventDefault();
-    const date = new Date().toISOString();
-    const desiredCategory = categories.find(category => category.name === formState.category.name);
-    if (desiredCategory) {
-      transaction ?
-          onSubmit({
-            createdAt: transaction.createdAt,
-            amount: Number(formState.amount),
-            category: desiredCategory._id
-          })
-          :
-          onSubmit({
-            createdAt: date,
-            amount: Number(formState.amount),
-            category: desiredCategory._id
-          });
-    }
+    onSubmit({
+      amount: Number(formState.amount),
+      category: formState._id
+    });
     setFormState(initialState);
   };
 
@@ -101,17 +78,17 @@ const TransactionForm: React.FC<Props> = ({onSubmit, transaction}) => {
           </select>
         </div>
         <div className="mb-3">
-          <label htmlFor="category" className="form-label">Type</label>
+          <label htmlFor="name" className="form-label">Category</label>
           <select
-              name="category"
-              value={formState.category.name}
+              name="name"
+              value={formState.name}
               className="form-select"
-              id="category"
+              id="name"
               onChange={onChangeHandler}
               required
           >
             <option disabled value="">Select category</option>
-            {filteredCategories(categories).map(category => (
+            {filteredCategoriesByType(categories).map(category => (
                 <option key={category._id} value={category.name}>{category.name}</option>
             ))}
           </select>

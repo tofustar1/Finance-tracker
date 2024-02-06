@@ -22,16 +22,13 @@ export interface ITransaction {
   createdAt: string;
 }
 
-export interface ITransactionForm {
-  type: string;
-  category: ICategory;
+export interface ITransactionForm extends ICategory{
   amount: number;
 }
 
 export interface ITransactionMutation {
   category: string;
   amount: number;
-  createdAt: string;
 }
 
 export interface IEditTransaction {

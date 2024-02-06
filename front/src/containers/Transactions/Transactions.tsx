@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from "../../app/hook";
 import {getTransactions} from "../../store/transactionsThunk";
+import {getCategories} from "../../store/categoriesThunk";
 import {
   selectGetTransactionsLoading,
   selectTotalAmount,
@@ -12,7 +13,6 @@ import TransactionItem from "../../components/CardItem/TransactionItem";
 import Total from "../../components/Total/Total";
 import TransactionModal from "../../components/Modal/TransactionModal";
 import Alert from "../../components/Alert/Alert";
-
 const Transactions = () => {
   const dispatch = useAppDispatch();
   const transactions = useAppSelector(selectTransactions);
@@ -21,11 +21,13 @@ const Transactions = () => {
 
   useEffect(() => {
     dispatch(getTransactions());
+    dispatch(getCategories());
   }, [dispatch]);
 
   useEffect(() => {
     dispatch(sumTotalAmount());
   }, [dispatch, transactions]);
+
 
   return (
       <>
