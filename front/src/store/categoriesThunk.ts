@@ -21,7 +21,7 @@ export const addCategory = createAsyncThunk<void, ICategoryMutation>(
 export const editCategory = createAsyncThunk<void, IEditCategory>(
     'categories/edit',
     async (params) => {
-      await axiosApi.put(`categories/${params._id}.json`, params.category);
+      await axiosApi.put(`categories/${params._id}`, params.category);
     }
 );
 

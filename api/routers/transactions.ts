@@ -42,7 +42,14 @@ transactions.post('/', async (req, res, next) => {
 
 transactions.delete('/:id', async (req, res, next) => {
   try {
-    await Transaction.findByIdAndDelete(req.params.id);
+    const { id } = req.params;
+
+    const transaction = await Transaction.findById(id);
+    if(!transaction) {
+      return res.status(404).send('Transaction not found!');
+    }
+
+    await Transaction.findByIdAndDelete(id);
     res.send('Transaction deleted successfully')
   } catch (e) {
     console.error('Error deleting transaction:', e);

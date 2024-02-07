@@ -40,16 +40,44 @@ categories.post('/', async (req, res, next) => {
   }
 });
 
+categories.put('/:id', async (req, res, next) => {
+  try{
+    const { id } = req.params;
+    const { name, type } = req.body;
+
+    const category = await Category.findById(id);
+    if (!category) {
+      return res.status(404).send('Category not found!');
+    }
+
+    const categoryData: ICategory = {
+      name: name ? name : category.name,
+      type: type ? type : category.type,
+    }
+
+    const updatedCategory = await Category.findByIdAndUpdate(id, categoryData, {new: true});
+
+
+    res.send(updatedCategory);
+  } catch (e) {
+    res.status(500).send('An error occurred while editing the category');
+  }
+});
+
 categories.delete('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
+
+    const category = await Category.findById(id);
+    if (!category) {
+      return res.status(404).send('Category not found!');
+    }
 
     await Transaction.deleteMany({category: id});
     await Category.findByIdAndDelete(id);
 
     res.send('Category and related transactions deleted successfully');
   } catch (e) {
-    console.error('Error deleting Category:', e);
     res.status(500).send('An error occurred while deleting the category');
   }
 });
