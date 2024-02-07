@@ -43,7 +43,7 @@ const TransactionModal = () => {
           <div className="modal-dialog" onClick={(e) => e.stopPropagation()}>
             <div className="modal-content">
               <div className="modal-header">
-                <h1 className="modal-title fs-5">{'Add Transaction'}</h1>
+                <h1 className="modal-title fs-5">{transaction ? 'Edit Transaction' : 'Add Transaction'}</h1>
               </div>
               <div className="modal-body">
                 <TransactionForm transaction={transaction} onSubmit={onSubmit}/>
