@@ -12,8 +12,7 @@ const port = 8000;
 app.use(express.json());
 app.use(cors({
   origin: ["https://finance-tracker-frontend-puce.vercel.app"],
-  methods: ["GET", "POST", "DELETE", "PUT"],
-  credentials: true
+  methods: ["GET", "POST", "DELETE", "PUT"]
 }));
 app.use(express.static('public'));
 
