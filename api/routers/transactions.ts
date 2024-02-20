@@ -1,7 +1,7 @@
 import express from "express";
-import mongoose from "mongoose";
 import Transaction from "../models/Transaction";
 import {ITransaction} from "../types";
+import mongoose from "mongoose";
 
 const transactions = express.Router();
 
@@ -15,13 +15,14 @@ transactions.get('/', async (req, res) => {
 });
 
 transactions.post('/', async (req, res, next) => {
-  const { category, amount } = req.body;
+  const { category, amount, name } = req.body;
 
   if (!amount || !category) {
     return res.status(400).send({error: 'Category and amount is required fields'});
   }
 
   const transactionData : Omit<ITransaction, 'createdAt'>  = {
+    name,
     category,
     amount
   };
@@ -36,30 +37,6 @@ transactions.post('/', async (req, res, next) => {
       return res.status(400).send(e);
     }
     next(e);
-  }
-});
-
-transactions.put('/:id', async (req, res, next) => {
-  try{
-    const { id } = req.params;
-    const { category, amount } = req.body;
-
-    const transaction = await Transaction.findById(id);
-    if (!transaction) {
-      return res.status(404).send('Transaction not found!');
-    }
-
-    const transactionData: Omit<ITransaction, 'createdAt'> = {
-      category: category ? category : transaction.category,
-      amount: amount ? amount : transaction.amount,
-    }
-
-    const updatedTransaction = await Transaction.findByIdAndUpdate(id, transactionData, {new: true});
-
-
-    res.send(updatedTransaction);
-  } catch (e) {
-    res.status(500).send('An error occurred while editing the transaction');
   }
 });
 

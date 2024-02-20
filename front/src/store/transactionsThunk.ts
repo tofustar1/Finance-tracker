@@ -20,7 +20,7 @@ export const addTransaction = createAsyncThunk<void, ITransactionMutation>(
 export const editTransaction = createAsyncThunk<void, IEditTransaction>(
     'transactions/edit',
     async (params) => {
-      await axiosApi.put(`transactions/${params.id}`, params.transaction);
+      await axiosApi.put(`transactions/${params.id}.json`, params.transaction);
     }
 );
 

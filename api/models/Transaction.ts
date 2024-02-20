@@ -4,6 +4,7 @@ import Category from "./Category";
 const Schema = mongoose.Schema;
 
 const TransactionSchema = new Schema<ITransaction>({
+  name: String,
   createdAt: {
     type: Date,
     required: true,

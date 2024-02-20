@@ -24,19 +24,6 @@ const TransactionForm: React.FC<Props> = ({onSubmit, transaction}) => {
   const addLoading = useAppSelector(selectAddTransactionLoading);
 
   useEffect(() => {
-    if (transaction) {
-      setFormState({
-        _id: transaction.category._id,
-        name: transaction.category.name,
-        type: transaction.category.type,
-        amount: transaction.amount
-      })
-    } else {
-      setFormState(initialState);
-    }
-  }, [transaction]);
-
-  useEffect(() => {
     const category = filteredCategoriesByName(categories);
     if (category) {
       setFormState(prevState => ({
