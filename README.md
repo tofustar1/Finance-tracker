@@ -38,7 +38,8 @@ Such an application can be a useful tool for tracking finances and managing pers
 
 ---
 
-### You can test my application: <a href="https://finance-tracker-frontend-puce.vercel.app/" target="_blank">Click me</a>
+### You can test my application: 
+https://finance-tracker-frontend-puce.vercel.app/
 
 
 
